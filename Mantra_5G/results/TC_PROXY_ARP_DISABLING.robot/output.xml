@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.10.12 on linux)" generated="2025-02-26T15:53:19.537946" rpa="false" schemaversion="5">
+<suite id="s1" name="TC PROXY ARP DISABLING" source="/home/exceeding/Mantra_5G/generische Testkatalog/TC_PROXY_ARP_DISABLING/TC_PROXY_ARP_DISABLING.robot">
+<test id="s1-t1" name="Check Proxy Status" line="9">
+<kw name="Open Connection" owner="SSHLibrary">
+<arg>${HOST}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" start="2025-02-26T15:53:19.600601" elapsed="0.000168"/>
+</kw>
+<kw name="Login" owner="SSHLibrary">
+<msg time="2025-02-26T15:53:19.601042" level="INFO">Logging into '10.57.0.1:22' as 'root'.</msg>
+<msg time="2025-02-26T15:53:20.856734" level="INFO">Read output: Last login: Wed Feb 26 15:49:34 2025 from 10.100.1.52
+[?2004h[root@CBM-2022070504 ~]#</msg>
+<arg>${USERNAME}</arg>
+<arg>${PASSWORD}</arg>
+<doc>Logs into the SSH server with the given ``username`` and ``password``.</doc>
+<status status="PASS" start="2025-02-26T15:53:19.600866" elapsed="1.256006"/>
+</kw>
+<kw name="Execute Command" owner="SSHLibrary">
+<msg time="2025-02-26T15:53:20.857454" level="INFO">Executing command 'cat /proc/sys/net/ipv4/conf/all/proxy_arp'.</msg>
+<msg time="2025-02-26T15:53:20.881515" level="INFO">Command exited with return code 0.</msg>
+<msg time="2025-02-26T15:53:20.881725" level="INFO">${PROXY_STATUS} = 0</msg>
+<var>${PROXY_STATUS}</var>
+<arg>${PROXY_STATUS_COMMAND}</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<status status="PASS" start="2025-02-26T15:53:20.857213" elapsed="0.024540"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:20.882260" level="INFO">0</msg>
+<arg>${PROXY_STATUS}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:20.882034" elapsed="0.000277"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<arg>${PROXY_STATUS}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-02-26T15:53:20.882427" elapsed="0.000194"/>
+</kw>
+<status status="PASS" start="2025-02-26T15:53:19.600099" elapsed="1.282662"/>
+</test>
+<test id="s1-t2" name="Run ARPING Command and Evaluate Output" line="17">
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:53:20.883733" level="INFO">Starting process:
+echo toor | sudo -S arping -c 10 -U -I enp2s0f1 10.57.0.1</msg>
+<msg time="2025-02-26T15:53:20.887042" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:53:30.973721" level="INFO">Process completed.</msg>
+<msg time="2025-02-26T15:53:30.974140" level="INFO">${output} = &lt;result object with rc 1&gt;</msg>
+<var>${output}</var>
+<arg>echo ${PASSWORD_Testmachine} | sudo -S arping -c 10 -U -I ${INTERFACE_Testmachine} ${HOST}</arg>
+<arg>shell=True</arg>
+<arg>stdout=True</arg>
+<arg>stderr=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:53:20.883397" elapsed="10.090785"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:30.975525" level="INFO">[sudo] password for exceeding: ARPING 10.57.0.1
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+
+--- 10.57.0.1 statistics ---
+10 packets transmitted, 0 packets received, 100% unanswered (0 extra)
+</msg>
+<arg>${output.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:30.974655" elapsed="0.000912"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:30.976111" level="INFO">[sudo] password for exceeding: ARPING 10.57.0.1
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+
+--- 10.57.0.1 statistics ---
+10 packets transmitted, 0 packets received, 100% unanswered (0 extra)
+</msg>
+<arg>${output.stderr}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:30.975656" elapsed="0.000494"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:53:30.977105" level="INFO">${found} = True</msg>
+<var>${found}</var>
+<arg>"100% unanswered" in """${output.stdout}""" or "100% unanswered" in """${output.stderr}"""</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:53:30.976247" elapsed="0.000879"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${found}</arg>
+<arg>"Expected 100% unanswered packets, but some responses were received."</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2025-02-26T15:53:30.977222" elapsed="0.000175"/>
+</kw>
+<doc>Führt das ARPING-Kommando direkt mit dem festgelegten Interface von testmachine aus und überprüft die Ausgabe.</doc>
+<status status="PASS" start="2025-02-26T15:53:20.882982" elapsed="10.094537"/>
+</test>
+<status status="PASS" start="2025-02-26T15:53:19.538628" elapsed="11.439553"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="2" fail="0" skip="0" id="s1" name="TC PROXY ARP DISABLING">TC PROXY ARP DISABLING</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.10.12 on linux)" generated="2025-02-26T15:49:23.132161" rpa="false" schemaversion="5">
+<suite id="s1" name="TC IP FWD DISABLING" source="/home/exceeding/Mantra_5G/generische Testkatalog/TC_IP_FORWARD_DISABLING/TC_IP_FWD_DISABLING.robot">
+<test id="s1-t1" name="Check IP_Forward Status via SSH" line="8">
+<kw name="Open Connection" owner="SSHLibrary">
+<arg>${HOST}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" start="2025-02-26T15:49:23.213740" elapsed="0.000173"/>
+</kw>
+<kw name="Login" owner="SSHLibrary">
+<msg time="2025-02-26T15:49:23.214168" level="INFO">Logging into '10.57.0.1:22' as 'root'.</msg>
+<msg time="2025-02-26T15:49:24.436304" level="INFO">Read output: Last login: Wed Feb 26 14:26:54 2025 from 10.70.0.4
+[?2004h[root@CBM-2022070504 ~]#</msg>
+<arg>${USERNAME}</arg>
+<arg>${PASSWORD}</arg>
+<doc>Logs into the SSH server with the given ``username`` and ``password``.</doc>
+<status status="PASS" start="2025-02-26T15:49:23.214019" elapsed="1.222425"/>
+</kw>
+<kw name="Execute Command" owner="SSHLibrary">
+<msg time="2025-02-26T15:49:24.436917" level="INFO">Executing command 'cat /proc/sys/net/ipv4/ip_forward'.</msg>
+<msg time="2025-02-26T15:49:24.460493" level="INFO">Command exited with return code 0.</msg>
+<msg time="2025-02-26T15:49:24.460683" level="INFO">${IPFORWARD_STATUS} = 1</msg>
+<var>${IPFORWARD_STATUS}</var>
+<arg>${IPFORWARD_STATUS_COMMAND}</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<status status="PASS" start="2025-02-26T15:49:24.436688" elapsed="0.024023"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:49:24.461200" level="INFO">1</msg>
+<arg>${IPFORWARD_STATUS}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:49:24.460914" elapsed="0.000329"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<msg time="2025-02-26T15:49:24.461555" level="FAIL">1.0 != 0.0</msg>
+<arg>${IPFORWARD_STATUS}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="FAIL" start="2025-02-26T15:49:24.461348" elapsed="0.000273">1.0 != 0.0</status>
+</kw>
+<kw name="Close Connection" owner="SSHLibrary">
+<doc>Closes the current connection.</doc>
+<status status="NOT RUN" start="2025-02-26T15:49:24.461715" elapsed="0.000015"/>
+</kw>
+<doc>Überprüfen Sie den Proxy-ARP-Status über SSH.</doc>
+<status status="FAIL" start="2025-02-26T15:49:23.213187" elapsed="1.248679">1.0 != 0.0</status>
+</test>
+<test id="s1-t2" name="Run ARPING Command and Evaluate Output" line="17">
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:49:24.462746" level="INFO">Starting process:
+echo toor | sudo -S arping -c 10 -U -I enp2s0f1 10.57.0.1</msg>
+<msg time="2025-02-26T15:49:24.465996" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:49:34.562730" level="INFO">Process completed.</msg>
+<msg time="2025-02-26T15:49:34.563139" level="INFO">${output} = &lt;result object with rc 1&gt;</msg>
+<var>${output}</var>
+<arg>echo ${PASSWORD_Testmachine} | sudo -S arping -c 10 -U -I ${INTERFACE_Testmachine} ${HOST}</arg>
+<arg>shell=True</arg>
+<arg>stdout=True</arg>
+<arg>stderr=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:49:24.462443" elapsed="10.100734"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:49:34.564447" level="INFO">[sudo] password for exceeding: ARPING 10.57.0.1
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+
+--- 10.57.0.1 statistics ---
+10 packets transmitted, 0 packets received, 100% unanswered (0 extra)
+</msg>
+<arg>${output.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:49:34.563597" elapsed="0.000892"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:49:34.565045" level="INFO">[sudo] password for exceeding: ARPING 10.57.0.1
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+Timeout
+
+--- 10.57.0.1 statistics ---
+10 packets transmitted, 0 packets received, 100% unanswered (0 extra)
+</msg>
+<arg>${output.stderr}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:49:34.564578" elapsed="0.000502"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:49:34.566019" level="INFO">${found} = True</msg>
+<var>${found}</var>
+<arg>"100% unanswered" in """${output.stdout}""" or "100% unanswered" in """${output.stderr}"""</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:49:34.565175" elapsed="0.000876"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${found}</arg>
+<arg>"Expected 100% unanswered packets, but some responses were received."</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2025-02-26T15:49:34.566153" elapsed="0.000186"/>
+</kw>
+<doc>Führt das ARPING-Kommando direkt mit dem festgelegten Interface von testmachine aus und überprüft die Ausgabe.</doc>
+<status status="PASS" start="2025-02-26T15:49:24.462086" elapsed="10.104374"/>
+</test>
+<status status="FAIL" start="2025-02-26T15:49:23.132838" elapsed="11.434159"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="1" skip="0" id="s1" name="TC IP FWD DISABLING">TC IP FWD DISABLING</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

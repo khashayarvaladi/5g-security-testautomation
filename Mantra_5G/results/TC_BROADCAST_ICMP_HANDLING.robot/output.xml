@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.10.12 on linux)" generated="2025-02-26T15:53:31.137765" rpa="false" schemaversion="5">
+<suite id="s1" name="TC BROADCAST ICMP HANDLING" source="/home/exceeding/Mantra_5G/generische Testkatalog/TC_BROADCAST_ICMP_HANDLING/TC_BROADCAST_ICMP_HANDLING.robot">
+<test id="s1-t1" name="List ICMP ECHO Message" line="10">
+<kw name="Open Connection" owner="SSHLibrary">
+<arg>${HOST}</arg>
+<arg>port=${PORT}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" start="2025-02-26T15:53:31.245382" elapsed="0.000284"/>
+</kw>
+<kw name="Login" owner="SSHLibrary">
+<msg time="2025-02-26T15:53:31.245913" level="INFO">Logging into '10.57.0.1:22' as 'root'.</msg>
+<msg time="2025-02-26T15:53:32.344195" level="INFO">Read output: Last login: Wed Feb 26 15:53:19 2025 from 10.100.1.52
+[?2004h[root@CBM-2022070504 ~]#</msg>
+<arg>${USERNAME}</arg>
+<arg>${PASSWORD}</arg>
+<doc>Logs into the SSH server with the given ``username`` and ``password``.</doc>
+<status status="PASS" start="2025-02-26T15:53:31.245766" elapsed="1.098645"/>
+</kw>
+<kw name="Execute Command" owner="SSHLibrary">
+<msg time="2025-02-26T15:53:32.345125" level="INFO">Executing command 'cat /proc/sys/net/ipv4/icmp_echo_ignore_broadcasts'.</msg>
+<msg time="2025-02-26T15:53:32.368958" level="INFO">Command exited with return code 0.</msg>
+<msg time="2025-02-26T15:53:32.369164" level="INFO">${icmp_configuration} = 1</msg>
+<var>${icmp_configuration}</var>
+<arg>${check_icmp-echo}</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<status status="PASS" start="2025-02-26T15:53:32.344777" elapsed="0.024416"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:32.369605" level="INFO">1</msg>
+<arg>${icmp_configuration}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:32.369404" elapsed="0.000244"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<arg>${icmp_configuration}</arg>
+<arg>1</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-02-26T15:53:32.369759" elapsed="0.000191"/>
+</kw>
+<doc>ICMP ECHO</doc>
+<tag>pingtest</tag>
+<status status="PASS" start="2025-02-26T15:53:31.244668" elapsed="1.125390"/>
+</test>
+<test id="s1-t2" name="Ping" line="19">
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:53:32.370820" level="INFO">Starting process:
+ping -c 5 10.57.0.255</msg>
+<msg time="2025-02-26T15:53:32.374074" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:53:46.489939" level="INFO">Process completed.</msg>
+<msg time="2025-02-26T15:53:46.490322" level="INFO">${ping_output} = &lt;result object with rc 1&gt;</msg>
+<var>${ping_output}</var>
+<arg>ping -c 5 10.57.0.255</arg>
+<arg>shell=True</arg>
+<arg>stdout=True</arg>
+<arg>stderr=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:53:32.370569" elapsed="14.119787"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:46.491643" level="INFO">PING 10.57.0.255 (10.57.0.255) 56(84) bytes of data.
+
+--- 10.57.0.255 ping statistics ---
+5 packets transmitted, 0 received, 100% packet loss, time 4111ms
+</msg>
+<arg>${ping_output.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:46.490801" elapsed="0.000884"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:46.492257" level="INFO">PING 10.57.0.255 (10.57.0.255) 56(84) bytes of data.
+
+--- 10.57.0.255 ping statistics ---
+5 packets transmitted, 0 received, 100% packet loss, time 4111ms
+</msg>
+<arg>${ping_output.stderr}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:46.491780" elapsed="0.000522"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:53:46.493238" level="INFO">${found} = True</msg>
+<var>${found}</var>
+<arg>"100% packet loss" in """${ping_output.stdout}""" or "100% packet unanswered" in """${ping_output.stderr}"""</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:53:46.492402" elapsed="0.000858"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${found}</arg>
+<arg>"Expected 100% packet loss, but some responses were received."</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2025-02-26T15:53:46.493361" elapsed="0.000171"/>
+</kw>
+<doc>Führt das PING-Kommando direkt mit dem festgelegten Interface von testmachine aus und überprüft die Ausgabe.</doc>
+<status status="PASS" start="2025-02-26T15:53:32.370244" elapsed="14.123408"/>
+</test>
+<test id="s1-t3" name="Run ICMP Timestamp" line="31">
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:53:46.494546" level="INFO">Starting process:
+echo toor | sudo -S hping3 --icmp-ts -c 10 10.57.0.255</msg>
+<msg time="2025-02-26T15:53:46.497723" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:53:56.573357" level="INFO">Process completed.</msg>
+<msg time="2025-02-26T15:53:56.573734" level="INFO">${ICMP_output} = &lt;result object with rc 1&gt;</msg>
+<var>${ICMP_output}</var>
+<arg>echo ${PASSWORD_Testmachine} | sudo -S hping3 --icmp-ts -c 10 10.57.0.255</arg>
+<arg>shell=True</arg>
+<arg>stdout=True</arg>
+<arg>stderr=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:53:46.494291" elapsed="10.079479"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:56.575061" level="INFO">[sudo] password for exceeding: 
+--- 10.57.0.255 hping statistic ---
+10 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 10.57.0.255 (enp2s0f1 10.57.0.255): icmp mode set, 28 headers + 0 data bytes</msg>
+<arg>${ICMP_output.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.574226" elapsed="0.000876"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:56.575650" level="INFO">[sudo] password for exceeding: 
+--- 10.57.0.255 hping statistic ---
+10 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 10.57.0.255 (enp2s0f1 10.57.0.255): icmp mode set, 28 headers + 0 data bytes</msg>
+<arg>${ICMP_output.stderr}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.575196" elapsed="0.000490"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:53:56.576638" level="INFO">${found} = True</msg>
+<var>${found}</var>
+<arg>"100% packet loss" in """${ICMP_output.stdout}""" or "100% unanswered" in """${ICMP_output.stderr}"""</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.575785" elapsed="0.000873"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${found}</arg>
+<arg>"Expected 100% packet loss, but some responses were received."</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.576755" elapsed="0.000174"/>
+</kw>
+<doc>Führt das ICMP Timestamp-Kommando direkt mit dem festgelegten Interface von testmachine aus und überprüft die Ausgabe.</doc>
+<status status="PASS" start="2025-02-26T15:53:46.493876" elapsed="10.083183"/>
+</test>
+<status status="PASS" start="2025-02-26T15:53:31.138600" elapsed="25.438958"/>
+</suite>
+<statistics>
+<total>
+<stat pass="3" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">pingtest</stat>
+</tag>
+<suite>
+<stat pass="3" fail="0" skip="0" id="s1" name="TC BROADCAST ICMP HANDLING">TC BROADCAST ICMP HANDLING</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

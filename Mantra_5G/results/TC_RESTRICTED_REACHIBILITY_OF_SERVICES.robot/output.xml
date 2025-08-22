@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.10.12 on linux)" generated="2025-02-26T15:53:16.010214" rpa="false" schemaversion="5">
+<suite id="s1" name="TC RESTRICTED REACHIBILITY OF SERVICES" source="/home/exceeding/Mantra_5G/generische Testkatalog/TC_RESTRICTED_REACHIBILITY_OF_SERVICES/TC_RESTRICTED_REACHIBILITY_OF_SERVICES.robot">
+<test id="s1-t1" name="Run Nmap Scans and Validate Port Reachability" line="15">
+<kw name="Run Nmap And Save Results">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-02-26T15:53:16.028700" level="INFO">${command} = echo toor | sudo -S -p "" nmap -sT -p 22,80,443,9000,9001,9003 10.57.0.1</msg>
+<var>${command}</var>
+<arg>echo ${PASSWORD_Testmachine} | sudo -S -p "" nmap -sT -p ${EXPECTED_PORTS_NUMBER} ${interface_ip}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-02-26T15:53:16.028530" elapsed="0.000200"/>
+</kw>
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:53:16.029059" level="INFO">Starting process:
+echo toor | sudo -S -p "" nmap -sT -p 22,80,443,9000,9001,9003 10.57.0.1</msg>
+<msg time="2025-02-26T15:53:16.031349" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:53:16.264412" level="INFO">Process completed.</msg>
+<arg>${command}</arg>
+<arg>shell=True</arg>
+<arg>stdout=${output_file}</arg>
+<arg>stderr=stderr</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:53:16.028806" elapsed="0.235881"/>
+</kw>
+<arg>${INTERFACE_1}</arg>
+<arg>${ALLOWED_INTERFACE_FILE}</arg>
+<status status="PASS" start="2025-02-26T15:53:16.028127" elapsed="0.236844"/>
+</kw>
+<kw name="Run Nmap And Save Results">
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2025-02-26T15:53:16.266152" level="INFO">${command} = echo toor | sudo -S -p "" nmap -sT -p 22,80,443,9000,9001,9003 192.168.122.1</msg>
+<var>${command}</var>
+<arg>echo ${PASSWORD_Testmachine} | sudo -S -p "" nmap -sT -p ${EXPECTED_PORTS_NUMBER} ${interface_ip}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2025-02-26T15:53:16.265937" elapsed="0.000234"/>
+</kw>
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:53:16.266602" level="INFO">Starting process:
+echo toor | sudo -S -p "" nmap -sT -p 22,80,443,9000,9001,9003 192.168.122.1</msg>
+<msg time="2025-02-26T15:53:16.269097" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:53:19.394850" level="INFO">Process completed.</msg>
+<arg>${command}</arg>
+<arg>shell=True</arg>
+<arg>stdout=${output_file}</arg>
+<arg>stderr=stderr</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:53:16.266266" elapsed="3.128779"/>
+</kw>
+<arg>${INTERFACE_2}</arg>
+<arg>${RESTRICTED_INTERFACE_FILE}</arg>
+<status status="PASS" start="2025-02-26T15:53:16.265372" elapsed="3.129902"/>
+</kw>
+<kw name="Validate Ports" owner="PortValidationLibrary">
+<msg time="2025-02-26T15:53:19.396042" level="INFO">${result} = PASS: All ports restricted as expected.</msg>
+<var>${result}</var>
+<doc>Validates that expected ports are only in the allowed interface file and not in the restricted one.</doc>
+<status status="PASS" start="2025-02-26T15:53:19.395575" elapsed="0.000489"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:19.396302" level="INFO">PASS: All ports restricted as expected.</msg>
+<arg>${result}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:19.396149" elapsed="0.000181"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${result}</arg>
+<arg>PASS</arg>
+<arg>Ports are correctly restricted</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-02-26T15:53:19.396411" elapsed="0.000159"/>
+</kw>
+<doc>Runs nmap scans on two interfaces, saves the output, and validates port reachability.</doc>
+<status status="PASS" start="2025-02-26T15:53:16.027750" elapsed="3.368935"/>
+</test>
+<status status="PASS" start="2025-02-26T15:53:16.010857" elapsed="3.386275"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="TC RESTRICTED REACHIBILITY OF SERVICES">TC RESTRICTED REACHIBILITY OF SERVICES</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

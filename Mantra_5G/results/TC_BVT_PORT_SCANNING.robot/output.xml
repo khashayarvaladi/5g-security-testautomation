@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.10.12 on linux)" generated="2025-02-26T15:53:56.743257" rpa="false" schemaversion="5">
+<suite id="s1" name="TC BVT PORT SCANNING" source="/home/exceeding/Mantra_5G/generische Testkatalog/TC_BVT_PORT_SCANNING/TC_BVT_PORT_SCANNING.robot">
+<test id="s1-t1" name="Run Nmap Command, Save Output, and Verify Ports Status" line="10">
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:53:56.772650" level="INFO">Starting process:
+bash -c "nmap 10.57.0.1"</msg>
+<msg time="2025-02-26T15:53:56.775350" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:53:56.847058" level="INFO">Process completed.</msg>
+<msg time="2025-02-26T15:53:56.847402" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<var>${result}</var>
+<arg>bash</arg>
+<arg>-c</arg>
+<arg>${nmap_COMMAND}</arg>
+<arg>stdout=STRING</arg>
+<arg>stderr=STRING</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.772420" elapsed="0.075024"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:56.848695" level="INFO">Starting Nmap 7.80 ( https://nmap.org ) at 2025-02-26 15:53 CET
+Nmap scan report for 10.57.0.1
+Host is up (0.00033s latency).
+Not shown: 994 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+443/tcp  open  https
+9000/tcp open  cslistener
+9001/tcp open  tor-orport
+9003/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 0.06 seconds</msg>
+<arg>${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.847868" elapsed="0.000869"/>
+</kw>
+<kw name="Write Nmap Output to File">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:56.849850" level="INFO">Saving nmap output to file: /home/exceeding/Mantra_5G/generische Testkatalog/TC_BVT_PORT_SCANNING/PORTS_STATUS.txt</msg>
+<arg>Saving nmap output to file: ${OUTPUT_FILE}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.849685" elapsed="0.000197"/>
+</kw>
+<kw name="Create File" owner="OperatingSystem">
+<msg time="2025-02-26T15:53:56.850289" level="INFO" html="true">Created file '&lt;a href="file:///home/exceeding/Mantra_5G/generische Testkatalog/TC_BVT_PORT_SCANNING/PORTS_STATUS.txt"&gt;/home/exceeding/Mantra_5G/generische Testkatalog/TC_BVT_PORT_SCANNING/PORTS_STATUS.txt&lt;/a&gt;'.</msg>
+<arg>${OUTPUT_FILE}</arg>
+<arg>${content}</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.849974" elapsed="0.000358"/>
+</kw>
+<arg>${result.stdout}</arg>
+<status status="PASS" start="2025-02-26T15:53:56.849038" elapsed="0.001348"/>
+</kw>
+<kw name="Verify Expected Ports In File">
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2025-02-26T15:53:56.850834" level="INFO" html="true">Getting file '&lt;a href="file:///home/exceeding/Mantra_5G/generische Testkatalog/TC_BVT_PORT_SCANNING/PORTS_STATUS.txt"&gt;/home/exceeding/Mantra_5G/generische Testkatalog/TC_BVT_PORT_SCANNING/PORTS_STATUS.txt&lt;/a&gt;'.</msg>
+<msg time="2025-02-26T15:53:56.850955" level="INFO">${file_content} = Starting Nmap 7.80 ( https://nmap.org ) at 2025-02-26 15:53 CET
+Nmap scan report for 10.57.0.1
+Host is up (0.00033s latency).
+Not shown: 994 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/t...</msg>
+<var>${file_content}</var>
+<arg>${OUTPUT_FILE}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.850722" elapsed="0.000250"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:56.851148" level="INFO">File content read for verification:
+Starting Nmap 7.80 ( https://nmap.org ) at 2025-02-26 15:53 CET
+Nmap scan report for 10.57.0.1
+Host is up (0.00033s latency).
+Not shown: 994 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+443/tcp  open  https
+9000/tcp open  cslistener
+9001/tcp open  tor-orport
+9003/tcp open  unknown
+
+Nmap done: 1 IP address (1 host up) scanned in 0.06 seconds</msg>
+<arg>File content read for verification:\n${file_content}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.851048" elapsed="0.000135"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:53:56.851472" level="INFO">${ports_found} = [['22/tcp', 'open', 'ssh'], ['80/tcp', 'open', 'http'], ['443/tcp', 'open', 'https'], ['9000/tcp', 'open', 'cslistener'], ['9001/tcp', 'open', 'tor-orport'], ['9003/tcp', 'open', 'unknown']]</msg>
+<var>${ports_found}</var>
+<arg>[line.split() for line in '''${file_content}'''.splitlines() if "open" in line]</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.851265" elapsed="0.000226"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:56.851661" level="INFO">Found open ports and services:
+[['22/tcp', 'open', 'ssh'], ['80/tcp', 'open', 'http'], ['443/tcp', 'open', 'https'], ['9000/tcp', 'open', 'cslistener'], ['9001/tcp', 'open', 'tor-orport'], ['9003/tcp', 'open', 'unknown']]</msg>
+<arg>Found open ports and services:\n${ports_found}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.851565" elapsed="0.000123"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:53:56.852107" level="INFO">${port_line} = 22/tcp open ssh</msg>
+<var>${port_line}</var>
+<arg>' '.join(${port})</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.851956" elapsed="0.000167"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${EXPECTED_PORTS}</arg>
+<arg>${port_line}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.852200" elapsed="0.000113"/>
+</kw>
+<var name="${port}">['22/tcp', 'open', 'ssh']</var>
+<status status="PASS" start="2025-02-26T15:53:56.851886" elapsed="0.000453"/>
+</iter>
+<iter>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:53:56.852605" level="INFO">${port_line} = 80/tcp open http</msg>
+<var>${port_line}</var>
+<arg>' '.join(${port})</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.852474" elapsed="0.000147"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${EXPECTED_PORTS}</arg>
+<arg>${port_line}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.852689" elapsed="0.000105"/>
+</kw>
+<var name="${port}">['80/tcp', 'open', 'http']</var>
+<status status="PASS" start="2025-02-26T15:53:56.852413" elapsed="0.000406"/>
+</iter>
+<iter>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:53:56.853073" level="INFO">${port_line} = 443/tcp open https</msg>
+<var>${port_line}</var>
+<arg>' '.join(${port})</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.852945" elapsed="0.000143"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${EXPECTED_PORTS}</arg>
+<arg>${port_line}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.853153" elapsed="0.000102"/>
+</kw>
+<var name="${port}">['443/tcp', 'open', 'https']</var>
+<status status="PASS" start="2025-02-26T15:53:56.852881" elapsed="0.000402"/>
+</iter>
+<iter>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:53:56.853529" level="INFO">${port_line} = 9000/tcp open cslistener</msg>
+<var>${port_line}</var>
+<arg>' '.join(${port})</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.853399" elapsed="0.000145"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${EXPECTED_PORTS}</arg>
+<arg>${port_line}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.853609" elapsed="0.000102"/>
+</kw>
+<var name="${port}">['9000/tcp', 'open', 'cslistener']</var>
+<status status="PASS" start="2025-02-26T15:53:56.853343" elapsed="0.000421"/>
+</iter>
+<iter>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:53:56.854017" level="INFO">${port_line} = 9001/tcp open tor-orport</msg>
+<var>${port_line}</var>
+<arg>' '.join(${port})</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.853878" elapsed="0.000155"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${EXPECTED_PORTS}</arg>
+<arg>${port_line}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.854102" elapsed="0.000103"/>
+</kw>
+<var name="${port}">['9001/tcp', 'open', 'tor-orport']</var>
+<status status="PASS" start="2025-02-26T15:53:56.853826" elapsed="0.000403"/>
+</iter>
+<iter>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:53:56.854462" level="INFO">${port_line} = 9003/tcp open unknown</msg>
+<var>${port_line}</var>
+<arg>' '.join(${port})</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.854339" elapsed="0.000139"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${EXPECTED_PORTS}</arg>
+<arg>${port_line}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.854546" elapsed="0.000108"/>
+</kw>
+<var name="${port}">['9003/tcp', 'open', 'unknown']</var>
+<status status="PASS" start="2025-02-26T15:53:56.854287" elapsed="0.000395"/>
+</iter>
+<var>${port}</var>
+<value>@{ports_found}</value>
+<status status="PASS" start="2025-02-26T15:53:56.851750" elapsed="0.002950"/>
+</for>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:56.854824" level="INFO">All expected ports and services are correctly listed.</msg>
+<arg>All expected ports and services are correctly listed.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.854767" elapsed="0.000085"/>
+</kw>
+<doc>Check if specified ports and services are found in the file and no others are present.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.850550" elapsed="0.004339"/>
+</kw>
+<doc>Run nmap command, save the output to a file, and verify that only specific ports are open.</doc>
+<status status="PASS" start="2025-02-26T15:53:56.771788" elapsed="0.083195"/>
+</test>
+<status status="PASS" start="2025-02-26T15:53:56.743908" elapsed="0.111475"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="TC BVT PORT SCANNING">TC BVT PORT SCANNING</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.10.12 on linux)" generated="2025-02-26T15:53:57.004958" rpa="false" schemaversion="5">
+<suite id="s1" name="TC NAS INT SELECTION USE AMF" source="/home/exceeding/Mantra_5G/spezifische Testkatalog/TC_NAS_INT_SELECTION_USE_AMF/TC_NAS_INT_SELECTION_USE_AMF.robot">
+<test id="s1-t1" name="Execute Commands, Capture Packets, and Convert to JSON" line="7">
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:53:57.027024" level="INFO">Starting process:
+gnome-terminal -- bash -c "tshark -i lo -f 'sctp and host 127.0.0.5 and port 38412' -w /home/exceeding/PCAP/nr_rrc_capture.pcap; exec bash"</msg>
+<msg time="2025-02-26T15:53:57.029408" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:53:57.278764" level="INFO">Process completed.</msg>
+<msg time="2025-02-26T15:53:57.279224" level="INFO">${tshark_output} = &lt;result object with rc 0&gt;</msg>
+<var>${tshark_output}</var>
+<arg>${TSHARK_COMMAND}</arg>
+<arg>shell=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:53:57.026871" elapsed="0.252405"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:57.280043" level="INFO">Tshark started</msg>
+<arg>Tshark started</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:57.279754" elapsed="0.000338"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-02-26T15:54:02.280512" level="INFO">Slept 5 seconds.</msg>
+<arg>5s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-02-26T15:53:57.280204" elapsed="5.000440"/>
+</kw>
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:54:02.281233" level="INFO">Starting process:
+gnome-terminal -- bash -c "cd /home/exceeding/ueransim/UERANSIM/config &amp;&amp; ../build/nr-gnb -c gnb1.yaml; exec bash"</msg>
+<msg time="2025-02-26T15:54:02.283996" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:54:02.420880" level="INFO">Process completed.</msg>
+<msg time="2025-02-26T15:54:02.421239" level="INFO">${gnb_output} = &lt;result object with rc 0&gt;</msg>
+<var>${gnb_output}</var>
+<arg>${GNB_COMMAND}</arg>
+<arg>shell=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:54:02.280862" elapsed="0.140419"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:54:02.421994" level="INFO">gNB started</msg>
+<arg>gNB started</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:54:02.421740" elapsed="0.000296"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-02-26T15:54:07.422414" level="INFO">Slept 5 seconds.</msg>
+<arg>5s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-02-26T15:54:02.422140" elapsed="5.000404"/>
+</kw>
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:54:07.423092" level="INFO">Starting process:
+gnome-terminal -- bash -c "cd /home/exceeding/ueransim/UERANSIM/config &amp;&amp; ../build/nr-ue -c ue1.yaml; exec bash"</msg>
+<msg time="2025-02-26T15:54:07.426211" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:54:07.562863" level="INFO">Process completed.</msg>
+<msg time="2025-02-26T15:54:07.563358" level="INFO">${ue_output} = &lt;result object with rc 0&gt;</msg>
+<var>${ue_output}</var>
+<arg>${UE_COMMAND}</arg>
+<arg>shell=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:54:07.422767" elapsed="0.140649"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:54:07.564382" level="INFO">UE started</msg>
+<arg>UE started</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:54:07.564065" elapsed="0.000388"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-02-26T15:54:17.564976" level="INFO">Slept 10 seconds.</msg>
+<arg>10s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-02-26T15:54:07.564628" elapsed="10.000479"/>
+</kw>
+<kw name="Stop UE Process">
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:54:17.566464" level="INFO">Starting process:
+pkill -f nr-ue</msg>
+<msg time="2025-02-26T15:54:17.569305" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:54:17.581931" level="INFO">Process completed.</msg>
+<msg time="2025-02-26T15:54:17.582217" level="INFO">${ue_stop} = &lt;result object with rc -15&gt;</msg>
+<var>${ue_stop}</var>
+<arg>${STOP_UE_CMD}</arg>
+<arg>shell=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:54:17.566201" elapsed="0.016050"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:54:17.582827" level="INFO">UE stopped</msg>
+<arg>UE stopped</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:54:17.582627" elapsed="0.000234"/>
+</kw>
+<doc>Stop the UE process</doc>
+<status status="PASS" start="2025-02-26T15:54:17.565605" elapsed="0.017348"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-02-26T15:54:19.583316" level="INFO">Slept 2 seconds.</msg>
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-02-26T15:54:17.583050" elapsed="2.000399"/>
+</kw>
+<kw name="Stop GNB Process">
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:54:19.584629" level="INFO">Starting process:
+pkill -f nr-gnb</msg>
+<msg time="2025-02-26T15:54:19.587264" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:54:19.600478" level="INFO">Process completed.</msg>
+<msg time="2025-02-26T15:54:19.600887" level="INFO">${gnb_stop} = &lt;result object with rc -15&gt;</msg>
+<var>${gnb_stop}</var>
+<arg>${STOP_GNB_CMD}</arg>
+<arg>shell=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:54:19.584350" elapsed="0.016582"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:54:19.601543" level="INFO">gNB stopped</msg>
+<arg>gNB stopped</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:54:19.601320" elapsed="0.000259"/>
+</kw>
+<doc>Stop the gNB process</doc>
+<status status="PASS" start="2025-02-26T15:54:19.583835" elapsed="0.017826"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-02-26T15:54:21.602341" level="INFO">Slept 2 seconds.</msg>
+<arg>2s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-02-26T15:54:19.601755" elapsed="2.000776"/>
+</kw>
+<kw name="Stop Tshark Process">
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:54:21.603862" level="INFO">Starting process:
+pkill tshark</msg>
+<msg time="2025-02-26T15:54:21.607586" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:54:21.622501" level="INFO">Process completed.</msg>
+<msg time="2025-02-26T15:54:21.622926" level="INFO">${tshark_stop} = &lt;result object with rc 0&gt;</msg>
+<var>${tshark_stop}</var>
+<arg>${STOP_TSHARK_CMD}</arg>
+<arg>shell=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:54:21.603564" elapsed="0.019397"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:54:21.623549" level="INFO">Tshark stopped</msg>
+<arg>Tshark stopped</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:54:21.623340" elapsed="0.000243"/>
+</kw>
+<doc>Stop the tshark process</doc>
+<status status="PASS" start="2025-02-26T15:54:21.603059" elapsed="0.020597"/>
+</kw>
+<kw name="Check And Convert Pcap">
+<kw name="Get File Size" owner="OperatingSystem">
+<msg time="2025-02-26T15:54:21.624241" level="INFO" html="true">Size of file '&lt;a href="file:///home/exceeding/PCAP/nr_rrc_capture.pcap"&gt;/home/exceeding/PCAP/nr_rrc_capture.pcap&lt;/a&gt;' is 5044 bytes.</msg>
+<msg time="2025-02-26T15:54:21.624297" level="INFO">${file_size} = 5044</msg>
+<var>${file_size}</var>
+<arg>${PCAP_PATH}</arg>
+<doc>Returns and logs file size as an integer in bytes.</doc>
+<status status="PASS" start="2025-02-26T15:54:21.624072" elapsed="0.000289"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<kw name="Convert Pcap to Json">
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:54:21.624972" level="INFO">Starting process:
+gnome-terminal -- bash -c "tshark -r /home/exceeding/PCAP/nr_rrc_capture.pcap -T json &gt; /home/exceeding/PCAP/nr_rrc.json; exec bash"</msg>
+<msg time="2025-02-26T15:54:21.627224" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:54:21.777382" level="INFO">Process completed.</msg>
+<msg time="2025-02-26T15:54:21.777812" level="INFO">${convert_output} = &lt;result object with rc 0&gt;</msg>
+<var>${convert_output}</var>
+<arg>${TSHARK_COMMAND1}</arg>
+<arg>shell=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:54:21.624839" elapsed="0.153036"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:54:21.778832" level="INFO">Pcap converted to JSON: &lt;result object with rc 0&gt;</msg>
+<arg>Pcap converted to JSON: ${convert_output}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:54:21.778443" elapsed="0.000469"/>
+</kw>
+<doc>Convert the captured pcap file to a JSON file in a new terminal</doc>
+<status status="PASS" start="2025-02-26T15:54:21.624688" elapsed="0.154340"/>
+</kw>
+<arg>${file_size} &gt; 0</arg>
+<arg>Convert Pcap to Json</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-02-26T15:54:21.624461" elapsed="0.154626"/>
+</kw>
+<kw name="Run Keyword If" owner="BuiltIn">
+<arg>${file_size} == 0</arg>
+<arg>Log</arg>
+<arg>PCAP file is empty, skipping JSON conversion</arg>
+<doc>Runs the given keyword with the given arguments, if ``condition`` is true.</doc>
+<status status="PASS" start="2025-02-26T15:54:21.779274" elapsed="0.000247"/>
+</kw>
+<doc>Convert the captured pcap file to JSON if it is not empty</doc>
+<status status="PASS" start="2025-02-26T15:54:21.623842" elapsed="0.155752"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-02-26T15:54:26.781003" level="INFO">Slept 5 seconds.</msg>
+<arg>5s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-02-26T15:54:21.779745" elapsed="5.001388"/>
+</kw>
+<kw name="Run Python Script">
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:54:26.782365" level="INFO">Starting process:
+python3 "/home/exceeding/Mantra_5G/spezifische Testkatalog/TC_NAS_INT_SELECTION_USE_AMF/Json.py"</msg>
+<msg time="2025-02-26T15:54:26.785058" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:54:26.806909" level="INFO">Process completed.</msg>
+<msg time="2025-02-26T15:54:26.807347" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<var>${result}</var>
+<arg>python3</arg>
+<arg>${PYTHON_SCRIPT_PATH}</arg>
+<arg>stdout=stdout.txt</arg>
+<arg>stderr=stderr.txt</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:54:26.781876" elapsed="0.025503"/>
+</kw>
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2025-02-26T15:54:26.808039" level="INFO" html="true">Getting file '&lt;a href="file:///home/exceeding/Mantra_5G/stdout.txt"&gt;/home/exceeding/Mantra_5G/stdout.txt&lt;/a&gt;'.</msg>
+<msg time="2025-02-26T15:54:26.808328" level="INFO">${output} = nas-5gs.security_header_type: 2 found in the JSON file.
+</msg>
+<var>${output}</var>
+<arg>stdout.txt</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2025-02-26T15:54:26.807772" elapsed="0.000573"/>
+</kw>
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2025-02-26T15:54:26.808503" level="INFO" html="true">Getting file '&lt;a href="file:///home/exceeding/Mantra_5G/stderr.txt"&gt;/home/exceeding/Mantra_5G/stderr.txt&lt;/a&gt;'.</msg>
+<msg time="2025-02-26T15:54:26.808584" level="INFO">${error} = </msg>
+<var>${error}</var>
+<arg>stderr.txt</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2025-02-26T15:54:26.808425" elapsed="0.000175"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:54:26.808813" level="INFO">Output: nas-5gs.security_header_type: 2 found in the JSON file.
+</msg>
+<arg>Output: ${output}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:54:26.808680" elapsed="0.000162"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:54:26.809006" level="INFO">Errors: </msg>
+<arg>Errors: ${error}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:54:26.808920" elapsed="0.000112"/>
+</kw>
+<kw name="Should Be Equal As Integers" owner="BuiltIn">
+<msg time="2025-02-26T15:54:26.809716" level="INFO">Argument types are:
+&lt;class 'int'&gt;
+&lt;class 'str'&gt;</msg>
+<arg>${result.rc}</arg>
+<arg>0</arg>
+<arg>The Python script did not execute successfully.</arg>
+<doc>Fails if objects are unequal after converting them to integers.</doc>
+<status status="PASS" start="2025-02-26T15:54:26.809102" elapsed="0.000657"/>
+</kw>
+<kw name="Validate Status">
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-02-26T15:54:26.810290" level="INFO">${expected_messages} = ['nas-5gs.security_header_type: 2']</msg>
+<var>${expected_messages}</var>
+<arg>nas-5gs.security_header_type: 2</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-02-26T15:54:26.810202" elapsed="0.000103"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${output}</arg>
+<arg>${message}</arg>
+<arg>${message} not found in the output.</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-02-26T15:54:26.810559" elapsed="0.000146"/>
+</kw>
+<var name="${message}">nas-5gs.security_header_type: 2</var>
+<status status="PASS" start="2025-02-26T15:54:26.810495" elapsed="0.000239"/>
+</iter>
+<var>${message}</var>
+<value>@{expected_messages}</value>
+<status status="PASS" start="2025-02-26T15:54:26.810372" elapsed="0.000383"/>
+</for>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:54:26.810881" level="INFO">All expected status messages found in the output.</msg>
+<arg>All expected status messages found in the output.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:54:26.810824" elapsed="0.000091"/>
+</kw>
+<arg>${output}</arg>
+<status status="PASS" start="2025-02-26T15:54:26.809968" elapsed="0.000987"/>
+</kw>
+<doc>Run Python script to validate JSON content</doc>
+<status status="PASS" start="2025-02-26T15:54:26.781497" elapsed="0.029491"/>
+</kw>
+<doc>Run tshark, gNB, and UE commands in separate terminals, capture packets, stop processes, and convert to JSON.</doc>
+<status status="PASS" start="2025-02-26T15:53:57.026324" elapsed="29.784773"/>
+</test>
+<status status="PASS" start="2025-02-26T15:53:57.005606" elapsed="29.805897"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="TC NAS INT SELECTION USE AMF">TC NAS INT SELECTION USE AMF</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

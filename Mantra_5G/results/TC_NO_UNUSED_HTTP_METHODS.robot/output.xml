@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.10.12 on linux)" generated="2025-02-26T15:53:15.630151" rpa="false" schemaversion="5">
+<suite id="s1" name="TC NO UNUSED HTTP METHODS" source="/home/exceeding/Mantra_5G/generische Testkatalog/TC_NO_UNUSED_HTTP_METHODS/TC_NO_UNUSED_HTTP_METHODS.robot">
+<test id="s1-t1" name="Run Nmap Command, Save Output, and Verify Methods from File" line="9">
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:53:15.655882" level="INFO">Starting process:
+bash -c "nmap -p 443 --script http-methods 10.57.0.1"</msg>
+<msg time="2025-02-26T15:53:15.658291" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:53:15.862235" level="INFO">Process completed.</msg>
+<msg time="2025-02-26T15:53:15.862597" level="INFO">${result} = &lt;result object with rc 0&gt;</msg>
+<var>${result}</var>
+<arg>bash</arg>
+<arg>-c</arg>
+<arg>${http_command}</arg>
+<arg>stdout=STRING</arg>
+<arg>stderr=STRING</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.655655" elapsed="0.206979"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:15.863848" level="INFO">Starting Nmap 7.80 ( https://nmap.org ) at 2025-02-26 15:53 CET
+Nmap scan report for 10.57.0.1
+Host is up (0.00038s latency).
+
+PORT    STATE SERVICE
+443/tcp open  https
+| http-methods: 
+|_  Supported Methods: GET HEAD POST
+
+Nmap done: 1 IP address (1 host up) scanned in 0.19 seconds</msg>
+<arg>${result.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.863079" elapsed="0.000812"/>
+</kw>
+<kw name="Write Nmap Output to File">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:15.864881" level="INFO">Saving nmap output to file: /home/exceeding/Mantra_5G/generische Testkatalog/TC_NO_UNUSED_HTTP_METHODS/STRING.txt</msg>
+<arg>Saving nmap output to file: ${output_file_http}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.864781" elapsed="0.000138"/>
+</kw>
+<kw name="Create File" owner="OperatingSystem">
+<msg time="2025-02-26T15:53:15.865320" level="INFO" html="true">Created file '&lt;a href="file:///home/exceeding/Mantra_5G/generische Testkatalog/TC_NO_UNUSED_HTTP_METHODS/STRING.txt"&gt;/home/exceeding/Mantra_5G/generische Testkatalog/TC_NO_UNUSED_HTTP_METHODS/STRING.txt&lt;/a&gt;'.</msg>
+<arg>${output_file_http}</arg>
+<arg>${content}</arg>
+<doc>Creates a file with the given content and encoding.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.865001" elapsed="0.000364"/>
+</kw>
+<arg>${result.stdout}</arg>
+<status status="PASS" start="2025-02-26T15:53:15.864189" elapsed="0.001235"/>
+</kw>
+<kw name="Get File" owner="OperatingSystem">
+<msg time="2025-02-26T15:53:15.865617" level="INFO" html="true">Getting file '&lt;a href="file:///home/exceeding/Mantra_5G/generische Testkatalog/TC_NO_UNUSED_HTTP_METHODS/STRING.txt"&gt;/home/exceeding/Mantra_5G/generische Testkatalog/TC_NO_UNUSED_HTTP_METHODS/STRING.txt&lt;/a&gt;'.</msg>
+<msg time="2025-02-26T15:53:15.865739" level="INFO">${file_content} = Starting Nmap 7.80 ( https://nmap.org ) at 2025-02-26 15:53 CET
+Nmap scan report for 10.57.0.1
+Host is up (0.00038s latency).
+
+PORT    STATE SERVICE
+443/tcp open  https
+| http-methods: 
+|_  Supported ...</msg>
+<var>${file_content}</var>
+<arg>${output_file_http}</arg>
+<doc>Returns the contents of a specified file.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.865500" elapsed="0.000255"/>
+</kw>
+<kw name="Check Supported HTTP Methods in File">
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:15.866157" level="INFO">Checking supported HTTP methods in file content.</msg>
+<arg>Checking supported HTTP methods in file content.</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.866092" elapsed="0.000096"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:53:15.866627" level="INFO">${methods} = ['GET HEAD POST']</msg>
+<var>${methods}</var>
+<arg>re.findall(r'Supported Methods: (.*)', '''${file_content}''')</arg>
+<arg>re</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.866261" elapsed="0.000383"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:15.866815" level="INFO">Found methods: ['GET HEAD POST']</msg>
+<arg>Found methods: ${methods}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.866724" elapsed="0.000118"/>
+</kw>
+<kw name="Should Not Be Empty" owner="BuiltIn">
+<msg time="2025-02-26T15:53:15.867025" level="INFO">Length is 1.</msg>
+<arg>${methods}</arg>
+<arg>Supported HTTP methods not found in file content.</arg>
+<doc>Verifies that the given item is not empty.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.866919" elapsed="0.000134"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:53:15.867591" level="INFO">${method_list} = ['GET', 'HEAD', 'POST']</msg>
+<var>${method_list}</var>
+<arg>'''${methods[0]}'''.split()</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.867122" elapsed="0.000485"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:15.867768" level="INFO">Methods in list: ['GET', 'HEAD', 'POST']</msg>
+<arg>Methods in list: ${method_list}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.867678" elapsed="0.000158"/>
+</kw>
+<for flavor="IN">
+<iter>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:15.868191" level="INFO">Checking method: GET</msg>
+<arg>Checking method: ${method}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.868105" elapsed="0.000113"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${expected_methods}</arg>
+<arg>${method}</arg>
+<arg>Unsupported method found: ${method}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.868286" elapsed="0.000141"/>
+</kw>
+<var name="${method}">GET</var>
+<status status="PASS" start="2025-02-26T15:53:15.868042" elapsed="0.000412"/>
+</iter>
+<iter>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:15.868649" level="INFO">Checking method: HEAD</msg>
+<arg>Checking method: ${method}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.868569" elapsed="0.000105"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${expected_methods}</arg>
+<arg>${method}</arg>
+<arg>Unsupported method found: ${method}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.868735" elapsed="0.000132"/>
+</kw>
+<var name="${method}">HEAD</var>
+<status status="PASS" start="2025-02-26T15:53:15.868516" elapsed="0.000376"/>
+</iter>
+<iter>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:15.869090" level="INFO">Checking method: POST</msg>
+<arg>Checking method: ${method}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.869010" elapsed="0.000105"/>
+</kw>
+<kw name="Should Contain" owner="BuiltIn">
+<arg>${expected_methods}</arg>
+<arg>${method}</arg>
+<arg>Unsupported method found: ${method}</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.869175" elapsed="0.000130"/>
+</kw>
+<var name="${method}">POST</var>
+<status status="PASS" start="2025-02-26T15:53:15.868959" elapsed="0.000371"/>
+</iter>
+<var>${method}</var>
+<value>@{method_list}</value>
+<status status="PASS" start="2025-02-26T15:53:15.867906" elapsed="0.001441"/>
+</for>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:53:15.869499" level="INFO">All methods are valid: ['GET', 'HEAD', 'POST']</msg>
+<arg>All methods are valid: ${method_list}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.869417" elapsed="0.000108"/>
+</kw>
+<arg>${file_content}</arg>
+<status status="PASS" start="2025-02-26T15:53:15.865907" elapsed="0.003690"/>
+</kw>
+<doc>Run nmap command, save the output to a file, and verify supported HTTP methods.</doc>
+<status status="PASS" start="2025-02-26T15:53:15.655061" elapsed="0.214639"/>
+</test>
+<status status="PASS" start="2025-02-26T15:53:15.630797" elapsed="0.239250"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="TC NO UNUSED HTTP METHODS">TC NO UNUSED HTTP METHODS</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

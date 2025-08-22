@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.10.12 on linux)" generated="2025-02-26T15:49:36.054874" rpa="false" schemaversion="5">
+<suite id="s1" name="TC SYN FLOOD PREVENTATION" source="/home/exceeding/Mantra_5G/generische Testkatalog/TC_SYN_FOOD_PREVENTATION/TC_SYN_FLOOD_PREVENTATION.robot">
+<test id="s1-t1" name="Send SYN flood using hping3" line="6">
+<kw name="Run Process" owner="Process">
+<msg time="2025-02-26T15:49:36.072502" level="INFO">Starting process:
+echo toor | sudo -S timeout 6s hping3 -c 100 -d 120 -S -w 64 -p 80 --flood --rand-source 10.57.0.1</msg>
+<msg time="2025-02-26T15:49:36.074815" level="INFO">Waiting for process to complete.</msg>
+<msg time="2025-02-26T15:49:42.144315" level="INFO">Process completed.</msg>
+<msg time="2025-02-26T15:49:42.144755" level="INFO">${output} = &lt;result object with rc 124&gt;</msg>
+<var>${output}</var>
+<arg>echo ${PASSWORD_Testmachine} | sudo -S timeout 6s hping3 -c 100 -d 120 -S -w 64 -p 80 --flood --rand-source ${HOST}</arg>
+<arg>shell=True</arg>
+<arg>stdout=True</arg>
+<arg>stderr=True</arg>
+<doc>Runs a process and waits for it to complete.</doc>
+<status status="PASS" start="2025-02-26T15:49:36.072273" elapsed="6.072554"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:49:42.146156" level="INFO">[sudo] password for exceeding: hping in flood mode, no replies will be shown
+
+--- 10.57.0.1 hping statistic ---
+835114 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 10.57.0.1 (enp2s0f1 10.57.0.1): S set, 40 headers + 120 data bytes</msg>
+<arg>${output.stdout}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:49:42.145292" elapsed="0.000908"/>
+</kw>
+<kw name="Log" owner="BuiltIn">
+<msg time="2025-02-26T15:49:42.146741" level="INFO">[sudo] password for exceeding: hping in flood mode, no replies will be shown
+
+--- 10.57.0.1 hping statistic ---
+835114 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 10.57.0.1 (enp2s0f1 10.57.0.1): S set, 40 headers + 120 data bytes</msg>
+<arg>${output.stderr}</arg>
+<doc>Logs the given message with the given level.</doc>
+<status status="PASS" start="2025-02-26T15:49:42.146292" elapsed="0.000487"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:49:42.147706" level="INFO">${found} = True</msg>
+<var>${found}</var>
+<arg>"100% packet loss" in """${output.stdout}""" or "100% unanswered" in """${output.stderr}"""</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:49:42.146868" elapsed="0.000860"/>
+</kw>
+<kw name="Should Be True" owner="BuiltIn">
+<arg>${found}</arg>
+<arg>"Expected 100% packet loss, but some responses were received."</arg>
+<doc>Fails if the given condition is not true.</doc>
+<status status="PASS" start="2025-02-26T15:49:42.147817" elapsed="0.000189"/>
+</kw>
+<doc>Run SYN flood attack to the Call Box Mini and capture the output</doc>
+<status status="PASS" start="2025-02-26T15:49:36.071849" elapsed="6.076283"/>
+</test>
+<status status="PASS" start="2025-02-26T15:49:36.055573" elapsed="6.093057"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="TC SYN FLOOD PREVENTATION">TC SYN FLOOD PREVENTATION</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

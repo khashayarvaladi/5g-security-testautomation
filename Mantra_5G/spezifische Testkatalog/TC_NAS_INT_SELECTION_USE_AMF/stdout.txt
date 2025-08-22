@@ -1,0 +1,1 @@
+nas-5gs.security_header_type: 2 found in the JSON file.

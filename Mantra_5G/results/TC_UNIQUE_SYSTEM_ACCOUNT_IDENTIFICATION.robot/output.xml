@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.0.1 (Python 3.10.12 on linux)" generated="2025-02-26T15:49:34.722897" rpa="false" schemaversion="5">
+<suite id="s1" name="TC UNIQUE SYSTEM ACCOUNT IDENTIFICATION" source="/home/exceeding/Mantra_5G/generische Testkatalog/TC_UNIQUE_SYSTEM_ACCOUNT_IDENTIFICATION/TC_UNIQUE_SYSTEM_ACCOUNT_IDENTIFICATION.robot">
+<test id="s1-t1" name="Verify TOE Configuration" line="7">
+<kw name="Open Connection" owner="SSHLibrary">
+<arg>${HOST}</arg>
+<arg>port=${PORT}</arg>
+<doc>Opens a new SSH connection to the given ``host`` and ``port``.</doc>
+<status status="PASS" start="2025-02-26T15:49:34.781425" elapsed="0.000278"/>
+</kw>
+<kw name="Login" owner="SSHLibrary">
+<msg time="2025-02-26T15:49:34.781957" level="INFO">Logging into '10.57.0.1:22' as 'root'.</msg>
+<msg time="2025-02-26T15:49:35.878208" level="INFO">Read output: Last login: Wed Feb 26 15:49:23 2025 from 10.100.1.52
+[?2004h[root@CBM-2022070504 ~]#</msg>
+<arg>${USERNAME}</arg>
+<arg>${PASSWORD}</arg>
+<doc>Logs into the SSH server with the given ``username`` and ``password``.</doc>
+<status status="PASS" start="2025-02-26T15:49:34.781801" elapsed="1.096547"/>
+</kw>
+<kw name="Execute Command" owner="SSHLibrary">
+<msg time="2025-02-26T15:49:35.878753" level="INFO">Executing command 'cat /etc/passwd'.</msg>
+<msg time="2025-02-26T15:49:35.901116" level="INFO">Command exited with return code 0.</msg>
+<msg time="2025-02-26T15:49:35.901320" level="INFO">${passwd_content} = root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/...</msg>
+<var>${passwd_content}</var>
+<arg>cat /etc/passwd</arg>
+<doc>Executes ``command`` on the remote machine and returns its outputs.</doc>
+<status status="PASS" start="2025-02-26T15:49:35.878580" elapsed="0.022770"/>
+</kw>
+<kw name="Log Many" owner="BuiltIn">
+<msg time="2025-02-26T15:49:35.901724" level="INFO">root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+operator:x:11:0:operator:/root:/sbin/nologin
+games:x:12:100:games:/usr/games:/sbin/nologin
+ftp:x:14:50:FTP User:/var/ftp:/sbin/nologin
+nobody:x:65534:65534:Kernel Overflow User:/:/sbin/nologin
+apache:x:48:48:Apache:/usr/share/httpd:/sbin/nologin
+systemd-network:x:192:192:systemd Network Management:/:/sbin/nologin
+systemd-coredump:x:999:997:systemd Core Dumper:/:/sbin/nologin
+systemd-resolve:x:193:193:systemd Resolver:/:/sbin/nologin
+systemd-oom:x:998:996:systemd Userspace OOM Killer:/:/sbin/nologin
+systemd-timesync:x:997:995:systemd Time Synchronization:/:/sbin/nologin
+tss:x:59:59:Account used for TPM access:/dev/null:/sbin/nologin
+dbus:x:81:81:System message bus:/:/sbin/nologin
+polkitd:x:996:994:User for polkitd:/:/sbin/nologin
+avahi:x:70:70:Avahi mDNS/DNS-SD Stack:/var/run/avahi-daemon:/sbin/nologin
+unbound:x:995:992:Unbound DNS resolver:/etc/unbound:/sbin/nologin
+dnsmasq:x:994:991:Dnsmasq DHCP and DNS server:/var/lib/dnsmasq:/sbin/nologin
+nm-openconnect:x:993:989:NetworkManager user for OpenConnect:/:/sbin/nologin
+usbmuxd:x:113:113:usbmuxd user:/:/sbin/nologin
+gluster:x:992:988:GlusterFS daemons:/run/gluster:/sbin/nologin
+rtkit:x:172:172:RealtimeKit:/proc:/sbin/nologin
+pipewire:x:991:987:PipeWire System Daemon:/var/run/pipewire:/sbin/nologin
+geoclue:x:990:986:User for geoclue:/var/lib/geoclue:/sbin/nologin
+chrony:x:989:984::/var/lib/chrony:/sbin/nologin
+saslauth:x:988:76:Saslauthd user:/run/saslauthd:/sbin/nologin
+radvd:x:75:75:radvd user:/:/sbin/nologin
+rpc:x:32:32:Rpcbind Daemon:/var/lib/rpcbind:/sbin/nologin
+qemu:x:107:107:qemu user:/:/sbin/nologin
+openvpn:x:987:982:OpenVPN:/etc/openvpn:/sbin/nologin
+nm-openvpn:x:986:981:Default user for running openvpn spawned by NetworkManager:/:/sbin/nologin
+colord:x:985:980:User for colord:/var/lib/colord:/sbin/nologin
+rpcuser:x:29:29:RPC Service User:/var/lib/nfs:/sbin/nologin
+abrt:x:173:173::/etc/abrt:/sbin/nologin
+flatpak:x:984:979:User for flatpak system helper:/:/sbin/nologin
+gdm:x:42:42::/var/lib/gdm:/sbin/nologin
+gnome-initial-setup:x:983:978::/run/gnome-initial-setup/:/sbin/nologin
+vboxadd:x:982:1::/var/run/vboxadd:/sbin/nologin
+sshd:x:74:74:Privilege-separated SSH:/usr/share/empty.sshd:/sbin/nologin
+tcpdump:x:72:72::/:/sbin/nologin
+user:x:1000:1000:user:/home/user:/bin/bash
+nginx:x:981:972:Nginx web server:/var/lib/nginx:/sbin/nologin</msg>
+<arg>${passwd_content}</arg>
+<doc>Logs the given messages as separate entries using the INFO level.</doc>
+<status status="PASS" start="2025-02-26T15:49:35.901550" elapsed="0.000249"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:49:35.902215" level="INFO">${root_line} = root:x:0:0:root:/root:/bin/bash</msg>
+<var>${root_line}</var>
+<arg>[line for line in '''${passwd_content}'''.splitlines() if line.startswith("root:")][0]</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:49:35.901928" elapsed="0.000307"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:49:35.902475" level="INFO">${uid} = 0</msg>
+<var>${uid}</var>
+<arg>'''${root_line}'''.split(':')[2]</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:49:35.902318" elapsed="0.000175"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2025-02-26T15:49:35.902721" level="INFO">${gid} = 0</msg>
+<var>${gid}</var>
+<arg>'''${root_line}'''.split(':')[3]</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2025-02-26T15:49:35.902576" elapsed="0.000163"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<arg>${uid}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-02-26T15:49:35.902813" elapsed="0.000207"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<arg>${gid}</arg>
+<arg>0</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="PASS" start="2025-02-26T15:49:35.903101" elapsed="0.000123"/>
+</kw>
+<kw name="Close All Connections" owner="SSHLibrary">
+<doc>Closes all open connections.</doc>
+<status status="PASS" start="2025-02-26T15:49:35.903299" elapsed="0.000215"/>
+</kw>
+<status status="PASS" start="2025-02-26T15:49:34.780974" elapsed="1.122648"/>
+</test>
+<status status="PASS" start="2025-02-26T15:49:34.723698" elapsed="1.180275"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat pass="1" fail="0" skip="0" id="s1" name="TC UNIQUE SYSTEM ACCOUNT IDENTIFICATION">TC UNIQUE SYSTEM ACCOUNT IDENTIFICATION</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

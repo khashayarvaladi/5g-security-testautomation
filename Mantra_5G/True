@@ -1,0 +1,5 @@
+[sudo] password for exceeding: 
+--- 10.57.0.255 hping statistic ---
+10 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 10.57.0.255 (enp2s0f1 10.57.0.255): icmp mode set, 28 headers + 0 data bytes

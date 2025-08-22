@@ -1,0 +1,3 @@
+ngap.integrityProtectionIndication: 0 found in the JSON file.
+ngap.confidentialityProtectionIndication: 0 found in the JSON file.
+ngap.maximumIntegrityProtectedDataRate_UL: 1 found in the JSON file.
